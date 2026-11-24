@@ -2,7 +2,7 @@
 
 Notre projet pour le [Deezer Hackathon](https://luma.com/0dfd8jau), organisé par Unaite avec Deezer, du samedi 28 novembre 2026 à 9 h 30 au dimanche 29 novembre à 19 h, chez Deezer (24 rue de Calais, Paris 9e).
 
-**Où on en est : on choisit l'idée.** Les pistes, nos critères et la décision sont dans [`docs/idee.md`](docs/idee.md).
+**Où on en est : on choisit l'idée.** Les pistes, nos critères et la décision sont dans [`docs/idee.md`](docs/idee.md) ; ce qui existe déjà chez Deezer et ses concurrents est dans le [doc de contexte](https://claude.ai/artifact/Lp3ErLQGPmYRccJXam1nt3).
 
 ## L'événement
 
@@ -20,4 +20,4 @@ La question posée par Deezer : *« How does your app actually know what you wan
 
 - **API publique Deezer, sans clé** : la recherche, les fiches morceau, les artistes proches, la radio d'un artiste, les classements et les extraits audio de 30 s répondent (testé). La création de nouvelles applications Deezer est suspendue : pas d'accès à l'historique d'écoute d'un utilisateur par l'API publique.
 - **Gradium** (issu du labo Kyutai) : synthèse vocale, transcription, traduction vocale en direct, clonage de voix à partir de 10 s, création d'une voix à partir d'une description, modèle embarqué Phonon. Cinq langues dont le français et l'anglais, premier son en moins de 300 ms en streaming, SDK Python ([documentation](https://docs.gradium.ai/guides/introduction)).
-- **Ce qui existe déjà** : chez Deezer, Flow, Flow Tuner, Playlist with AI et un filtre pour écarter la musique générée par IA (annoncé en octobre 2026) ; chez Spotify, un DJ IA qui prend les demandes à la voix depuis mai 2025 et parle français.
+- **Ce qui existe déjà** : chez Deezer, Flow, Flow Tuner, Playlist avec IA et un filtre pour écarter la musique générée par IA (annoncé en octobre 2026) ; chez Spotify, un DJ IA qui prend les demandes à la voix depuis mai 2025 et parle français.

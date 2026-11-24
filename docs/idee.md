@@ -13,7 +13,7 @@ La page de l'événement pose la question : comment ton app sait ce que tu veux 
 3. **La voix sert l'expérience** (mains libres, récit, langue) ; ce n'est pas un gadget ajouté à la fin.
 4. **Deezer pourrait la livrer demain** sans renier ses choix : les artistes humains, l'auditeur aux commandes de l'algorithme (Flow Tuner), les vrais fans.
 5. **Elle tient en une trentaine d'heures** à trois ou quatre, avec les données vraiment disponibles (API publique, extraits de 30 s).
-6. **Ce n'est pas une copie** du DJ de Spotify ou de Playlist with AI.
+6. **Ce n'est pas une copie** de ce qui existe chez Deezer ou ses concurrents : tout est recensé dans le [doc de contexte](https://claude.ai/artifact/Lp3ErLQGPmYRccJXam1nt3).
 
 ## Les pistes
 
@@ -23,11 +23,11 @@ La page de l'événement pose la question : comment ton app sait ce que tu veux 
 
 **La démo.** Un membre du jury dit un artiste à voix haute. Moins d'une minute après, le voyage commence : la voix parle sur la fin de chaque extrait, la carte du trajet se dessine à l'écran, et il peut dire « plus loin » ou « reviens » pour changer de route.
 
-**Pourquoi ça peut gagner.** Ce que tu veux entendre ensuite, c'est parfois ce que tu ne connais pas encore, et l'app te dit pourquoi elle te le propose. La voix est le cœur du produit (le récit), Deezer y trouve la découverte d'artistes humains, et à notre connaissance rien de tel n'existe : le DJ de Spotify commente ta musique, il ne t'emmène pas ailleurs avec une carte et des sources.
+**Pourquoi ça peut gagner.** Ce que tu veux entendre ensuite, c'est parfois ce que tu ne connais pas encore, et l'app te dit pourquoi elle te le propose. La voix est le cœur du produit (le récit), et Deezer y trouve la découverte d'artistes humains.
 
 **Comment.** L'API publique Deezer (artistes proches, radios, extraits), des faits tirés de sources (Wikipédia, MusicBrainz), un LLM qui écrit le récit à partir de ces sources seulement, la voix du guide créée avec Gradium (création de voix par description) et le pilotage à la voix (transcription Gradium).
 
-**Le risque.** Un fait inventé, dit à voix haute devant le jury. Parade : aucune phrase sans source, comme dans un RAG.
+**Le risque.** Le terrain est déjà occupé : Spotify relie samples, reprises et producteurs avec SongDNA et raconte les morceaux avec About the Song (2026), et YouTube Music teste des animateurs IA qui racontent les titres (Beyond the Beat). S'y ajoute le fait inventé, dit à voix haute devant le jury ; parade : aucune phrase sans source, comme dans un RAG.
 
 ### B. Ton profil, en clair : la personnalisation qui s'explique
 
@@ -35,11 +35,11 @@ La page de l'événement pose la question : comment ton app sait ce que tu veux 
 
 **La démo.** Un membre du jury cite cinq artistes. L'app lui résume son profil en dix secondes ; il la corrige à voix haute ; la file d'écoute se réordonne devant lui, avec la raison de chaque morceau.
 
-**Pourquoi ça peut gagner.** C'est la question du jury prise au pied de la lettre, et l'étape d'après Flow Tuner : des interrupteurs à la conversation. Le DJ de Spotify prend une demande ponctuelle ; ici la correction reste et s'explique.
+**Pourquoi ça peut gagner.** C'est la question du jury prise au pied de la lettre, et l'étape d'après Flow Tuner : des interrupteurs à la conversation.
 
 **Comment.** La transcription et la synthèse Gradium en streaming pour une vraie conversation, l'API publique Deezer pour les morceaux candidats, un LLM qui tient le profil et classe les morceaux.
 
-**Le risque.** Sans vrai historique d'écoute (la création d'apps Deezer est suspendue), le profil part de cinq artistes : c'est moins magique. Et Deezer avance déjà dans cette direction, le jury peut trouver l'idée attendue.
+**Le risque.** Sans vrai historique d'écoute (la création d'apps Deezer est suspendue), le profil part de cinq artistes : c'est moins magique. Et l'idée existe déjà : Deezer montre les titres qui influencent son algorithme (2025), et Spotify teste depuis 2026 un Taste Profile pour voir et façonner son profil de goûts.
 
 ### C. La voix de l'artiste, dans ta langue : le lien entre l'artiste et ses fans
 
@@ -65,4 +65,4 @@ La page de l'événement pose la question : comment ton app sait ce que tu veux 
 
 À prendre ensemble. On écrira ici l'idée retenue, la date, pourquoi elle, et ce qu'on a écarté.
 
-Proposition de départ : **A, le voyage**. C'est la piste qui coche le mieux nos six critères : elle répond à la question du jury par la découverte, la voix y est indispensable, elle ressemble à Deezer, et elle ne copie pas le DJ de Spotify. On peut lui ajouter le pilotage à la voix de B.
+Ma proposition de départ (A, le voyage) ne tient plus : les recherches du 24 novembre 2026 montrent que A et B recoupent des fonctions lancées par Spotify en 2026. Le [doc de contexte](https://claude.ai/artifact/Lp3ErLQGPmYRccJXam1nt3) recense ce qui existe chez Deezer et ses concurrents, et les besoins pour lesquels rien n'a été trouvé.
