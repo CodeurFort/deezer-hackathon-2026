@@ -15,7 +15,50 @@ La page de l'événement pose la question : comment ton app sait ce que tu veux 
 5. **Elle tient en une trentaine d'heures** à trois ou quatre, avec les données vraiment disponibles (API publique, extraits de 30 s).
 6. **Ce n'est pas une copie** de ce qui existe chez Deezer ou ses concurrents : tout est recensé dans le [doc de contexte](https://claude.ai/artifact/Lp3ErLQGPmYRccJXam1nt3).
 
-## Les pistes
+## La piste d'Aurian : les motifs musicaux qu'on aime
+
+**L'idée.** Repérer les motifs musicaux qu'un auditeur aime sans savoir les nommer (suites d'accords, couleurs d'accords, gammes et modes), puis lui proposer des morceaux qui ont les mêmes, en lui disant pourquoi. Au départ, une intuition d'Aurian : « j'aime les suites d'accords qui descendent, je ne sais pas pourquoi ».
+
+**La démo.** Un juré donne cinq morceaux qu'il adore, ou une playlist publique Deezer. Vingt secondes plus tard, une voix lui dit : « Quatre de tes cinq morceaux ont une basse qui descend. Écoute. » Elle joue la suite d'accords seule pendant que l'écran la montre, puis lance trois morceaux qu'il ne connaît pas et qui ont la même.
+
+**Pourquoi ça peut gagner.**
+
+- Elle répond à la question du jury par le pourquoi : « tu aimes les basses qui descendent, en voilà d'autres », et non « les gens comme toi écoutent ça ».
+- La science la soutient : sur 745 tubes du Billboard, le plaisir musical dépend du dosage entre incertitude et surprise dans les suites d'accords ([Cheung et al., 2019](https://www.cell.com/current-biology/fulltext/S0960-9822(19)31258-8)).
+- Elle prolonge ce que fait Deezer : un algorithme qu'on comprend et qu'on règle (paramètres de l'algorithme, Flow Tuner), et l'écriture des artistes humains mise en valeur. Deezer Research parle ce langage : elle a publié [Spleeter](https://research.deezer.com/projects/spleeter.html), qui sépare voix, batterie et basse.
+- La voix et l'image y ont un vrai rôle : la voix Gradium explique en jouant la suite d'accords, l'écran montre la basse qui descend pendant l'écoute.
+
+**Ce qui existe déjà** (recherches du 24 novembre 2026). Rien d'équivalent trouvé dans une app de streaming. Les plus proches :
+
+- Pandora et son [Music Genome Project](https://en.wikipedia.org/wiki/Music_Genome_Project) : environ 450 caractéristiques par morceau, dont l'harmonie, notées à la main par des musiciens et utilisées pour recommander. Aucun profil harmonique montré à l'auditeur, d'après ce qu'on a vu.
+- [Hooktheory](https://www.hooktheory.com/theorytab) : on construit une suite d'accords et on voit les morceaux qui l'utilisent. C'est fait pour les musiciens et n'apprend le goût de personne ; de petits outils font pareil ([Progressions](https://github.com/Ljfernando/Progressions)).
+- Spotify : le Taste Profile (comment l'app comprend tes goûts) et SongDNA (samples, reprises, producteurs), rien sur l'harmonie.
+
+**Comment.**
+
+1. Entrée : cinq morceaux cherchés sur Deezer, ou une playlist publique Deezer, lisible sans clé avec les codes ISRC (testé).
+2. Accords : le jeu de données [Chordonomicon](https://huggingface.co/datasets/ailsntua/Chordonomicon) (679 807 morceaux, accords section par section, tirés d'Ultimate Guitar, 284 Mo). Il n'a pas les titres, seulement des identifiants Spotify : il faut passer par l'API Spotify, puis chercher sur Deezer par code ISRC (testé côté Deezer). Autre voie : détecter les accords dans les extraits audio de 30 secondes.
+3. Motifs, calculés pour chaque morceau : basse qui descend, cadences, boucles de quatre accords, accords enrichis (septièmes, sus, add9), mode majeur ou mineur, modulations, degré de surprise des accords.
+4. Profil : les motifs plus fréquents dans les morceaux aimés que dans l'ensemble du catalogue.
+5. Recommandation : des morceaux qui partagent ces motifs, chacun avec sa raison.
+6. Restitution : la voix Gradium explique, et un visuel de la suite d'accords suit l'extrait.
+
+**Les risques.**
+
+- Les accords : ceux d'Ultimate Guitar sont saisis par des amateurs ; la correspondance avec Deezer dépend de l'API Spotify ; la détection audio est moins fiable et 30 secondes peuvent tomber à côté du refrain.
+- La licence de Chordonomicon est CC BY-NC 4.0 : usage non commercial en citant la source. Ça convient pour un prototype de hackathon, pas pour un produit Deezer commercialisé tel quel.
+- Le goût n'est pas que de l'harmonie : chez certains, c'est le rythme, la voix ou le son. L'app doit le dire franchement quand aucun motif ne ressort.
+- L'API Deezer ne donne plus l'historique d'écoute : la démo part d'une playlist publique ou de morceaux cités.
+
+**À vérifier avant le hackathon.**
+
+- [ ] L'accès à l'API Spotify, pour passer des identifiants de Chordonomicon aux codes ISRC.
+- [ ] La qualité des accords sur une vingtaine de morceaux connus.
+- [ ] Un outil open source de détection d'accords sur les extraits de 30 secondes.
+
+## Les autres pistes (proposées par Claude)
+
+Écrites le 24 novembre avant l'état de l'existant ; A et B recoupent des fonctions de Spotify.
 
 ### A. Le voyage : découvrir, guidé par une voix
 
@@ -65,4 +108,14 @@ La page de l'événement pose la question : comment ton app sait ce que tu veux 
 
 À prendre ensemble. On écrira ici l'idée retenue, la date, pourquoi elle, et ce qu'on a écarté.
 
+En tête depuis le 24 novembre 2026 : la piste d'Aurian, les motifs musicaux qu'on aime. Elle reste à valider avec l'équipe.
+
 Ma proposition de départ (A, le voyage) ne tient plus : les recherches du 24 novembre 2026 montrent que A et B recoupent des fonctions lancées par Spotify en 2026. Le [doc de contexte](https://claude.ai/artifact/Lp3ErLQGPmYRccJXam1nt3) recense ce qui existe chez Deezer et ses concurrents, et les besoins pour lesquels rien n'a été trouvé.
+
+## Texte pour le formulaire d'inscription
+
+Case « Which track are you most interested in? » : *Listening personalization with generative AI*.
+
+Case « Do you already have a project idea? If so tell us about it! » :
+
+> Yes. Most of us love musical patterns we can't name: I love descending chord progressions and never knew why. We want Deezer to tell listeners why they love what they love. From a few favourite songs or a public playlist, our app finds the patterns a listener keeps coming back to (chord progressions, chord colours, scales and modes). A Gradium voice explains them out loud while the progression plays on screen, then the app plays new tracks that share them, each with a reason you can hear. Research links musical pleasure to surprise in chord progressions (Cheung et al., 2019); we want to make that personal.
