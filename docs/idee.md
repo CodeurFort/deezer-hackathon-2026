@@ -37,7 +37,7 @@ La page de l'événement pose la question : comment ton app sait ce que tu veux 
 **Comment.**
 
 1. Entrée : cinq morceaux cherchés sur Deezer, ou une playlist publique Deezer, lisible sans clé avec les codes ISRC (testé).
-2. Accords : le jeu de données [Chordonomicon](https://huggingface.co/datasets/ailsntua/Chordonomicon) (679 807 morceaux, accords section par section, tirés d'Ultimate Guitar, 284 Mo). Il n'a pas les titres, seulement des identifiants Spotify : il faut passer par l'API Spotify, puis chercher sur Deezer par code ISRC (testé côté Deezer). Autre voie : détecter les accords dans les extraits audio de 30 secondes.
+2. Analyse de l'audio de chaque extrait de 30 secondes : la basse suivie temps par temps, les accords majeurs et mineurs, la tonalité, en 0,4 seconde. En complément, le jeu de données [Chordonomicon](https://huggingface.co/datasets/ailsntua/Chordonomicon) (679 807 morceaux, accords section par section, tirés d'Ultimate Guitar) donne les accords enrichis des morceaux plus anciens ; on le relie à Deezer par l'aperçu public de Spotify, sans compte (38 morceaux sur 40 retrouvés).
 3. Motifs, calculés pour chaque morceau : basse qui descend, cadences, boucles de quatre accords, accords enrichis (septièmes, sus, add9), mode majeur ou mineur, modulations, degré de surprise des accords.
 4. Profil : les motifs plus fréquents dans les morceaux aimés que dans l'ensemble du catalogue.
 5. Recommandation : des morceaux qui partagent ces motifs, chacun avec sa raison.
@@ -45,16 +45,23 @@ La page de l'événement pose la question : comment ton app sait ce que tu veux 
 
 **Les risques.**
 
-- Les accords : ceux d'Ultimate Guitar sont saisis par des amateurs ; la correspondance avec Deezer dépend de l'API Spotify ; la détection audio est moins fiable et 30 secondes peuvent tomber à côté du refrain.
+- La justesse de l'analyse : sur 10 extraits, 77 % du temps sur les bons accords, mais l'audio ne voit ni septièmes ni accords sus, et 30 secondes peuvent tomber à côté du refrain. Le détail est dans [`faisabilite.md`](faisabilite.md).
+- Les données d'accords : Chordonomicon couvre mal la musique française récente (au mieux 9 % du Top France actuel) et note rarement la basse.
 - La licence de Chordonomicon est CC BY-NC 4.0 : usage non commercial en citant la source. Ça convient pour un prototype de hackathon, pas pour un produit Deezer commercialisé tel quel.
 - Le goût n'est pas que de l'harmonie : chez certains, c'est le rythme, la voix ou le son. L'app doit le dire franchement quand aucun motif ne ressort.
 - L'API Deezer ne donne plus l'historique d'écoute : la démo part d'une playlist publique ou de morceaux cités.
 
+**Faisabilité.** Étudiée et mesurée le 25 novembre 2026 dans [`faisabilite.md`](faisabilite.md) : faisable si l'on part de l'audio des extraits Deezer, le jeu de données d'accords ne servant que de complément.
+
 **À vérifier avant le hackathon.**
 
-- [ ] L'accès à l'API Spotify, pour passer des identifiants de Chordonomicon aux codes ISRC.
-- [ ] La qualité des accords sur une vingtaine de morceaux connus.
-- [ ] Un outil open source de détection d'accords sur les extraits de 30 secondes.
+- [x] L'accès à l'API Spotify : inutile, l'aperçu public de Spotify suffit pour relier Chordonomicon à Deezer.
+
+    Vérifié le 25 novembre 2026.
+- [x] Un outil open source de détection d'accords sur les extraits de 30 secondes : Essentia, 77 % du temps sur les bons accords.
+
+    Vérifié le 25 novembre 2026, sur 10 morceaux.
+- [ ] La suite est dans [`faisabilite.md`](faisabilite.md) : le test d'Aurian sur ses propres morceaux, l'écoute des morceaux signalés, la mesure des erreurs de la détection de basse, et les questions aux organisateurs.
 
 ## Les autres pistes (proposées par Claude)
 
