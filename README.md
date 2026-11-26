@@ -2,7 +2,7 @@
 
 Notre projet pour le [Deezer Hackathon](https://luma.com/0dfd8jau), organisé par Unaite avec Deezer, du samedi 28 novembre 2026 à 9 h 30 au dimanche 29 novembre à 19 h, chez Deezer (24 rue de Calais, Paris 9e).
 
-**Où on en est : une piste en tête, à valider avec l'équipe.** Repérer les motifs musicaux qu'un auditeur aime (suites d'accords, couleurs d'accords, gammes) et lui proposer des morceaux qui ont les mêmes, en lui disant pourquoi. Le détail, les autres pistes et nos critères sont dans [`docs/idee.md`](docs/idee.md) ; ce qui existe déjà chez Deezer et ses concurrents est dans le [doc de contexte](https://claude.ai/artifact/Lp3ErLQGPmYRccJXam1nt3).
+**Où on en est : une piste en tête, à valider avec l'équipe.** Repérer les motifs musicaux qu'un auditeur aime (suites d'accords, couleurs d'accords, gammes) et lui proposer des morceaux qui ont les mêmes, en lui disant pourquoi. Le détail, les autres pistes et nos critères sont dans [`docs/idee.md`](docs/idee.md) ; le suivi du travail, étape par étape, est dans le [registre](REGISTRE.md) ; ce qui existe déjà chez Deezer et ses concurrents est dans le [doc de contexte](https://claude.ai/artifact/Lp3ErLQGPmYRccJXam1nt3).
 
 ## L'événement
 
