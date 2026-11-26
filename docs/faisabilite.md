@@ -54,7 +54,9 @@ Deux points restent à prouver avant le 28 novembre : que la basse détectée es
 ## Ce qu'il reste à valider avant le 28 novembre
 
 - [ ] Le test d'Aurian : 5 à 10 morceaux qu'il aime « parce que ça descend » et 5 autres. L'app retrouve-t-elle son motif ?
-- [ ] L'écoute des 9 morceaux signalés dans les tops : ont-ils vraiment une basse qui descend ?
+- [x] L'écoute des 9 morceaux signalés dans les tops : ont-ils vraiment une basse qui descend ?
+
+    Écoutés par Aurian le 26 novembre 2026 : 5 sur 5 confirmés. La basse descend nettement sur « Fille à Papa » (Vacra), « LES DIAMANTS DE BOKASSA » (Ninho) et « Weekend In Texas » (Kacey Musgraves). Sur « Dedans » (L2B) et « Phone, Keys, Wallet » (Lainey Wilson), elle monte par moments puis descend sur le motif de fin : une descente libre, pas mécanique, et c'est ce qu'on cherche. Pas encore écoutés : « Le Petit Pêcheur », « Loving Life Again », « Jaded », « I Had Some Help ».
 - [ ] Une cinquantaine de morceaux annotés à l'oreille pour mesurer les erreurs de la détection de basse.
 - [ ] Demander aux organisateurs si le code préparé est autorisé, et comment obtenir la clé Gradium.
 
