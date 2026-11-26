@@ -4,7 +4,7 @@ Chaque étape du projet a ici une entrée datée, la plus récente en haut, avec
 
 ## Où on en est
 
-- **Idée validée** : repérer ce qu'un auditeur aime dans trois piliers (suites d'accords, mouvements de la basse, rythme) et lui proposer des morceaux qui le partagent, en lui disant pourquoi, avec un agent vocal incarné par un avatar 3D.
+- **Concept** : [le squelette du son](docs/concept.md). Mélodie, harmonie, basse, rythme et tempo sont mesurés dans le morceau ; l'auditeur entend ce qui relie ses morceaux préférés, puis découvre des morceaux qui ont le même squelette. Un agent vocal incarné par un avatar 3D le guide.
 - **Architecture** : proposée dans [`docs/architecture.md`](docs/architecture.md), à valider avec l'équipe.
 - **Faisabilité** : établie en partant de l'audio des extraits Deezer ; la basse qui descend est validée à l'oreille par Aurian sur 5 morceaux.
 - **Accords enrichis** : un modèle de deep learning existant (lv-chordia) mesure la part de septièmes et de neuvièmes d'un morceau ; testé sur 15 extraits.
@@ -13,6 +13,42 @@ Chaque étape du projet a ici une entrée datée, la plus récente en haut, avec
 - **À faire** : le test d'Aurian sur ses propres morceaux ; l'écoute des 4 morceaux restants ; les questions aux organisateurs (code préparé autorisé ? clé Gradium ?) ; l'inscription.
 
 ## 26 novembre 2026
+
+### Recherche approfondie et proposition : le squelette du son
+
+- **Demande d'Aurian** : ne pas s'arrêter au minimum. Il veut :
+  - la gamme déduite et les morceaux faits de notes seules sans accords ;
+  - les types de basse (808, reese, guitare) ;
+  - le faux tempo, et le tempo comme critère à part entière ;
+  - des recherches poussées, et une proposition émotionnellement juste et marquante, avec ses arguments.
+- **Recherche**, vérifiée sur les sources :
+  - Sloboda (1991) : les larmes viennent des séquences et des appoggiatures, les frissons des harmonies inattendues ;
+  - NPR (2012), sur les appoggiatures de Someone Like You ;
+  - Salimpoor et al. (2011) : dopamine pendant l'attente puis au moment du frisson ;
+  - Gagnon et Peretz (2003) : le tempo pèse plus que le mode pour le gai et le triste ;
+  - Deezer Research : explicabilité (Afchar et al., 2022) et biais des profils de goût écrits par modèle de langage (Sguerra et al., 2025) ;
+  - outils : Basic Pitch, Demucs, Beat This! ;
+  - Ready Player Me fermé, sources d'avatars restantes.
+- **Expériences** (scripts dans [`experiences/`](experiences/), chiffres dans [`docs/faisabilite.md`](docs/faisabilite.md)) :
+  - **gamme et mode**, sur 17 morceaux choisis difficiles : 3, puis 8, puis 8 justes en trois versions ; arrêté après trois essais sans progrès ;
+  - **tempo** : Beat This! juste 11 fois sur 11 en admettant les deux lectures que donnent les sites eux-mêmes (Zombie 165 ou 83) ;
+  - **rythme harmonique** : Let It Be change d'accord tous les 2 temps, Get Lucky tous les 4 ;
+  - **types de basse** sur 9 basses isolées : la reese ressort nettement, la 808 et la basse synthé se confondent ;
+  - **notes seules** : Mask Off 89 % de notes seules et 0 % d'accords ;
+  - **appoggiatures** : Someone Like You en tête avec 16 par minute ;
+  - **temps de calcul** : Demucs 23 s par extrait sur le processeur.
+- **Erreurs et corrections** :
+  - la première version du mode réinventait une tonique plus faible que celle déjà validée : remplacée ;
+  - `basse_audio.py` lançait son analyse quand on l'importait : protégé, et les autres modules vérifiés ;
+  - une liste de fichiers mal passée sous zsh : corrigée ;
+  - mes tempos de référence étaient les lectures ressenties : les sites donnent aussi le double, c'est noté.
+- **Proposition** : [`docs/concept.md`](docs/concept.md), avec :
+  - la promesse ;
+  - la science qui la fonde ;
+  - les cinq couches mesurées ;
+  - six moments de démo (écouter ce qu'on aime à nu, la frise des frissons, même squelette autre peau, les curseurs, la carte à partager, le guide) ;
+  - les arguments pour le jury, ce qu'on ne promet pas, et trois noms possibles.
+- **Architecture** mise à jour : cinq couches, Demucs et Basic Pitch, choix à faire pour le catalogue.
 
 ### Architecture proposée
 

@@ -24,20 +24,26 @@ L'auditeur donne cinq morceaux. L'analyse audio en tire trois familles de critè
         │                                   │
         ▼                                   ▼
  Service d'analyse (Python, FastAPI)    Supabase (Postgres + pgvector)
- extrait Deezer ─► basse, batterie ─►   morceaux, caractéristiques,
- accords, degrés, mouvements de basse,  sessions, profils,
- rythme ─► caractéristiques             recommandations, retours
+ extrait Deezer ─► pistes séparées      morceaux, caractéristiques,
+ (Demucs) ─► notes (Basic Pitch),       sessions, profils,
+ accords (lv-chordia), temps (Beat      recommandations, retours
+ This!) ─► mélodie, harmonie, basse,
+ rythme, tempo
         ▲
         └── catalogue pré-calculé : quelques milliers de titres Deezer
 ```
 
-## Les trois piliers, critère par critère
+## Les cinq couches du squelette, critère par critère
 
-| Pilier | Critères calculés | Outils | Statut |
+Le concept et ses arguments sont dans [`concept.md`](concept.md).
+
+| Couche | Critères calculés | Outils | Statut |
 | --- | --- | --- | --- |
-| Harmonie | Tonalité et ambiguïté ; suites repérées (IV–V–I, ii–V–I, cadence rompue, iv emprunté, bVII–IV–I, boucle I–V–vi–IV, années 50, andalouse) ; part d'accords enrichis (septièmes, neuvièmes) | lv-chordia (accords), `degres.py` (tonalité, degrés) | **Mesuré** : 96 % du temps sur les bonnes triades, tonalité juste 11 fois sur 14, fréquences sur 169 873 morceaux |
-| Basse | Lignes qui descendent et qui montent, part de pas conjoints (basse qui marche), de sauts (quintes, octaves), de chromatisme, nombre de notes différentes | `basse_audio.py`, `mouvements_basse.py` ; basse isolée au préalable (Spleeter ou Demucs) | **Mesuré** sur 189 extraits, descentes validées à l'oreille 5 fois sur 5. Isolement de la basse **à tester** : le kick pollue les graves |
-| Rythme | Tempo ; densité de kick, de caisse claire et de charleston ; part de contretemps (syncope) ; air (doubles-croches vides) ; motif sur 16 pas ; percussions décrites par leur bande de fréquence et leur placement | `rythme.py` (bandes de fréquences) ; Beat This! (temps et débuts de mesure) ; ADTOF (kick, caisse claire, toms, charleston, cymbales) | Bandes **mesurées** sur 6 styles (l'afrobeats ressort le plus syncopé) ; Beat This! et ADTOF **à tester** : le tempo par bandes se trompe parfois du simple au double |
+| Mélodie et gamme | Notes seules ou accords ; gamme et couleur modale, avec un niveau de confiance ; appoggiatures et notes étrangères sur les temps | Demucs (voix et instruments), Basic Pitch (notes), lv-chordia, Essentia (clé), `mode.py`, `notes_et_appoggiatures.py` | **Mesuré** : notes seules nettes (Mask Off 89 %) ; mode juste une fois sur deux ; appoggiatures en tête sur Someone Like You |
+| Harmonie | Tonalité et ambiguïté ; suites (IV–V–I, ii–V–I, cadence rompue, iv emprunté, bVII–IV–I, boucle I–V–vi–IV, années 50, andalouse) ; part d'accords enrichis ; rythme harmonique (durée des accords en temps) ; surprise des enchaînements | lv-chordia, `degres.py`, Beat This! | **Mesuré** : 96 % du temps sur les bonnes triades, tonalité juste 11 fois sur 14, fréquences sur 169 873 morceaux, rythme harmonique cohérent. Surprise **à construire** |
+| Basse | Mouvement : descentes, montées, pas conjoints, sauts, chromatisme. Type : 808, reese, guitare, synthé | Demucs (basse isolée), `basse_audio.py`, `mouvements_basse.py`, `type_basse.py` | Mouvement **mesuré**, validé à l'oreille 5 fois sur 5. Type **exploratoire** : la reese ressort, 808 et synthé confondues |
+| Rythme | Densité de kick, caisse claire, charleston ; syncope ; air ; motif sur 16 pas ; percussions par bande de fréquence | `rythme.py` ; batterie isolée par Demucs ; ADTOF | Bandes **mesurées** sur 6 styles ; ADTOF **à tester** |
+| Tempo | Tempo compté et tempo ressenti ; mesure | Beat This!, Essentia | **Mesuré** : juste 11 fois sur 11 en admettant les deux lectures que donnent les sites ; le rythme harmonique tranche le ressenti |
 
 Pour l'afro, on ne nomme pas chaque percussion (conga, shaker) : on décrit ce qu'elle fait. Les aigus serrés et à contretemps signalent les shakers, les médiums syncopés les percussions, et le motif 3+3+2 se lit sur la grille de 16 pas.
 
@@ -83,14 +89,15 @@ Le navigateur ne lit que le catalogue ; toutes les écritures passent par l'API 
 ## Le catalogue
 
 - Quelques milliers de titres Deezer pris dans les playlists éditoriales par genre (rap français, afro, rock, jazz, pop…) et les radios d'artistes.
-- Environ 2 à 3 secondes d'analyse par titre sur le processeur, en parallèle sur 8 cœurs : à lancer dès la première heure, en tâche de fond.
+- Sans séparation des pistes, environ 2 à 3 secondes d'analyse par titre sur le processeur, en parallèle sur 8 cœurs : à lancer dès la première heure, en tâche de fond.
+- La séparation des pistes (Demucs) prend 23 secondes par extrait sur le processeur (mesuré). Elle sert en direct pour les 5 morceaux de l'auditeur, lancée dès le premier morceau cité. Pour le catalogue, on choisit : une carte graphique louée, un catalogue réduit à quelques centaines de titres, ou les critères mesurables sans séparation.
 - Métadonnées sous le quota de l'API Deezer, une dizaine de requêtes par seconde au plus ; les extraits audio ne sont pas concernés.
 - Chordonomicon n'entre pas dans la première version.
 
 ## Hébergement
 
 - **Écran et API Next.js** : Vercel.
-- **Service d'analyse** : il charge PyTorch et plusieurs modèles, donc il lui faut quelques gigaoctets de mémoire, mais pas de carte graphique (toutes nos mesures sont sur processeur). Il tourne sur un portable de l'équipe exposé par un tunnel pendant la démo, ou sur une machine louée.
+- **Service d'analyse** : il charge PyTorch et plusieurs modèles, donc il lui faut quelques gigaoctets de mémoire. Toutes nos mesures tournent sur le processeur ; seule la séparation des pistes à grande échelle demande une carte graphique. Il tourne sur un portable de l'équipe exposé par un tunnel pendant la démo, ou sur une machine louée.
 - **Base** : Supabase.
 - **Secrets** : les clés Anthropic, Gradium et Supabase restent côté serveur ; le navigateur reçoit un jeton court pour la voix.
 
@@ -118,4 +125,5 @@ Si l'équipe prend du retard, on coupe dans cet ordre : l'avatar, puis les curse
 2. **L'avatar** : un personnage générique (Avaturn ou MetaPerson), un avatar tiré d'un selfie, ou un style propre.
 3. **Le service d'analyse** : un portable et un tunnel, ou une machine louée.
 4. **Le code préparé avant l'événement** : à demander aux organisateurs.
-5. **Le nom du produit** : à choisir avant de dessiner le premier écran.
+5. **Le nom du produit** : à choisir avant de dessiner le premier écran ; trois pistes dans [`concept.md`](concept.md).
+6. **Le catalogue** : carte graphique louée pour séparer les pistes, catalogue réduit, ou critères sans séparation.

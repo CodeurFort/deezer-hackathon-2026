@@ -41,6 +41,11 @@ Les extraits audio sont téléchargés par les scripts depuis l'API publique de 
 | `test_degres.py` | Tonalité et suites détectées dans l'audio de 14 extraits, comparées à une analyse de référence | `venv-accords/bin/python`, après `test_lvchordia.py` |
 | `mouvements_basse.py` | Les mouvements de la basse : descentes, montées, pas conjoints, sauts, chromatisme, sur les extraits des tops ou ceux qu'on lui donne | `venv-audio/bin/python mouvements_basse.py [extraits/*.mp3]` |
 | `rythme.py` | Frappes graves, médiums et aiguës placées sur 16 doubles-croches : densité, contretemps, air | `venv-audio/bin/python rythme.py extraits/*.mp3` |
+| `mode.py` | Gamme et mode de 17 morceaux de référence, en trois versions (`--v2`, `--v3`) | `venv-audio/bin/python mode.py --v3` |
+| `tempo_beatthis.py` | Tempo, mesure et durée des accords avec Beat This! | `venv-accords/bin/python tempo_beatthis.py <extraits>` |
+| `type_basse.py` | Basse isolée par Demucs et six signatures acoustiques ; les basses isolées sont écrites dans `basses/` | `venv-accords/bin/python type_basse.py <extraits>` |
+| `pistes_et_temps.py` | Voix et instruments isolés par Demucs, temps par Beat This!, accords si absents | `venv-accords/bin/python pistes_et_temps.py <extraits>` |
+| `notes_et_appoggiatures.py` | Notes seules ou accords (instruments) et appoggiatures (voix), avec Basic Pitch | `venv-audio/bin/python`, après le précédent |
 | `frequences_suites.py` | La fréquence de chaque suite sur 169 873 morceaux de Chordonomicon | `python3` |
 
 ## Pièges rencontrés
