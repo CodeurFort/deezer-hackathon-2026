@@ -4,7 +4,8 @@ Chaque étape du projet a ici une entrée datée, la plus récente en haut, avec
 
 ## Où on en est
 
-- **Idée en tête** : repérer les motifs musicaux qu'un auditeur aime (basse qui descend, suites d'accords, rythme) et lui proposer des morceaux qui ont les mêmes, en lui disant pourquoi.
+- **Idée validée** : repérer ce qu'un auditeur aime dans trois piliers (suites d'accords, mouvements de la basse, rythme) et lui proposer des morceaux qui le partagent, en lui disant pourquoi, avec un agent vocal incarné par un avatar 3D.
+- **Architecture** : proposée dans [`docs/architecture.md`](docs/architecture.md), à valider avec l'équipe.
 - **Faisabilité** : établie en partant de l'audio des extraits Deezer ; la basse qui descend est validée à l'oreille par Aurian sur 5 morceaux.
 - **Accords enrichis** : un modèle de deep learning existant (lv-chordia) mesure la part de septièmes et de neuvièmes d'un morceau ; testé sur 15 extraits.
 - **Suites de degrés** : IV–V–I, ii–V–I, cadence rompue, iv emprunté… se repèrent dans l'audio ; les suites rares révèlent un goût dès 5 morceaux, IV–V–I en demande davantage.
@@ -12,6 +13,29 @@ Chaque étape du projet a ici une entrée datée, la plus récente en haut, avec
 - **À faire** : le test d'Aurian sur ses propres morceaux ; l'écoute des 4 morceaux restants ; les questions aux organisateurs (code préparé autorisé ? clé Gradium ?) ; l'inscription.
 
 ## 26 novembre 2026
+
+### Architecture proposée
+
+- **Demande d'Aurian** : si les trois piliers tiennent, penser l'architecture (web app, base de données, agent vocal avec avatar 3D).
+- **Fait** : [`docs/architecture.md`](docs/architecture.md). On y trouve :
+  - la vue d'ensemble : Next.js, API serveur, service d'analyse Python, Supabase ;
+  - les critères de chaque pilier, et le cœur (profil, recommandation, curseurs) ;
+  - l'agent vocal (Claude, Gradium) et l'avatar 3D (TalkingHead) ;
+  - les tables, le catalogue, l'hébergement, le découpage en 30 heures et les questions à trancher.
+- **Vérifié en route** : TalkingHead exige un avatar à squelette compatible Mixamo, avec les expressions ARKit et Oculus, et peut caler les lèvres directement sur le son (HeadAudio). Ready Player Me a fermé le 31 janvier 2026 ; restent notamment Avaturn, MetaPerson et VRoid.
+- **À trancher** : le modèle de l'agent et sa latence, l'avatar, l'hébergement de l'analyse, le code préparé, le nom du produit.
+
+### Les trois piliers validés : harmonie, basse, rythme
+
+- **Demande d'Aurian** : exploiter trois piliers, les suites d'accords, les mouvements de la basse (pas seulement la descente) et le rythme (kick, caisse claire, charleston, percussions afro par les fréquences).
+- **Fait** :
+  - mouvements de basse sur 189 extraits des tops et 10 morceaux connus ([`mouvements_basse.py`](experiences/mouvements_basse.py)) ;
+  - rythme par bandes de fréquences sur une grille de 16 doubles-croches, sur 6 styles ([`rythme.py`](experiences/rythme.py)).
+- **Résultats** :
+  - basse : 47 qui marchent, 30 qui sautent, 12 qui montent, 8 qui descendent, 5 qui tiennent une note, 87 mixtes ; Stand By Me ressort bien en basse qui marche ;
+  - rythme : le rock a peu de contretemps (4 %) et beaucoup d'air (62 %), l'afrobeats est le plus syncopé (47 à 49 % de contretemps), le disco et le reggaeton sont les plus denses ;
+  - limites : chromatisme gonflé par le kick dans les graves, tempo parfois faux du simple au double, médiums pollués par les voix.
+- **Conclusion** : les trois piliers sont mesurables ; l'idée est validée. Pour la précision : isoler basse et batterie, puis Beat This! et ADTOF, encore à tester.
 
 ### Les suites de degrés : peut-on dire à quelqu'un qu'il aime les IV–V–I ?
 
