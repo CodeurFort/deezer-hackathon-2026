@@ -37,7 +37,7 @@ La page de l'événement pose la question : comment ton app sait ce que tu veux 
 **Comment.**
 
 1. Entrée : cinq morceaux cherchés sur Deezer, ou une playlist publique Deezer, lisible sans clé avec les codes ISRC (testé).
-2. Analyse de l'audio de chaque extrait de 30 secondes : la basse suivie temps par temps, les accords majeurs et mineurs, la tonalité, en 0,4 seconde. En complément, le jeu de données [Chordonomicon](https://huggingface.co/datasets/ailsntua/Chordonomicon) (679 807 morceaux, accords section par section, tirés d'Ultimate Guitar) donne les accords enrichis des morceaux plus anciens ; on le relie à Deezer par l'aperçu public de Spotify, sans compte (38 morceaux sur 40 retrouvés).
+2. Analyse de l'audio de chaque extrait de 30 secondes, en 2 à 3 secondes : la basse suivie temps par temps, les accords y compris enrichis (septièmes, neuvièmes) grâce à un modèle de deep learning pré-entraîné, et la tonalité. En complément, le jeu de données [Chordonomicon](https://huggingface.co/datasets/ailsntua/Chordonomicon) (679 807 morceaux, accords section par section, tirés d'Ultimate Guitar) donne les accords enrichis des morceaux plus anciens ; on le relie à Deezer par l'aperçu public de Spotify, sans compte (38 morceaux sur 40 retrouvés).
 3. Motifs, calculés pour chaque morceau : basse qui descend, cadences, boucles de quatre accords, accords enrichis (septièmes, sus, add9), mode majeur ou mineur, modulations, degré de surprise des accords.
 4. Profil : les motifs plus fréquents dans les morceaux aimés que dans l'ensemble du catalogue.
 5. Recommandation : des morceaux qui partagent ces motifs, chacun avec sa raison.
@@ -45,7 +45,7 @@ La page de l'événement pose la question : comment ton app sait ce que tu veux 
 
 **Les risques.**
 
-- La justesse de l'analyse : sur 10 extraits, 77 % du temps sur les bons accords, mais l'audio ne voit ni septièmes ni accords sus, et 30 secondes peuvent tomber à côté du refrain. Le détail est dans [`faisabilite.md`](faisabilite.md).
+- La justesse de l'analyse : 96 % du temps sur les bons accords simples, mais l'accord enrichi exact n'est juste qu'une fois sur deux. On mesure donc la part d'accords enrichis d'un morceau sans nommer chaque accord. Et 30 secondes peuvent tomber à côté du refrain. Le détail est dans [`faisabilite.md`](faisabilite.md).
 - Les données d'accords : Chordonomicon couvre mal la musique française récente (au mieux 9 % du Top France actuel) et note rarement la basse.
 - La licence de Chordonomicon est CC BY-NC 4.0 : usage non commercial en citant la source. Ça convient pour un prototype de hackathon, pas pour un produit Deezer commercialisé tel quel.
 - Le goût n'est pas que de l'harmonie : chez certains, c'est le rythme, la voix ou le son. L'app doit le dire franchement quand aucun motif ne ressort.

@@ -13,6 +13,7 @@ Deux points restent à prouver avant le 28 novembre : que la basse détectée es
 | Question | Mesure | Résultat | Conséquence |
 | --- | --- | --- | --- |
 | Peut-on lire les accords d'un extrait Deezer ? | Essentia sur 10 extraits de 30 s aux accords connus, comparaison sans tenir compte de la tonalité | 77 % du temps sur les bons accords ; 7 suites complètes sur 10 (Let It Be 98 %, Despacito 94 %) ; échec sur Hit the Road Jack (36 %) | Bon pour les suites majeures et mineures simples ; l'outil ne voit ni les septièmes ni les accords sus |
+| Un modèle de deep learning fait-il mieux ? (26/11) | [lv-chordia](https://github.com/openmirlab/lv-chordia), 5 réseaux pré-entraînés, sur les 10 mêmes extraits et 5 morceaux riches en septièmes | 96 % du temps sur les bonnes triades (contre 77 %), Hit the Road Jack passe de 36 % à 76 % ; il reconnaît septièmes et neuvièmes, mais l'accord exact n'est juste que 56 % du temps sur les morceaux à septièmes (références approximatives). Part d'accords enrichis : 90 à 100 % pour Moondance, Isn't She Lovely et Fly Me to the Moon, 56 % pour Smooth, 0 à 23 % pour les 10 morceaux simples ; Get Lucky raté (0 %). 2 s par extrait | Les « couleurs d'accords » deviennent mesurables à l'échelle d'un morceau ; nommer chaque accord reste trop incertain |
 | Peut-on repérer une basse qui descend dans l'audio ? | Graves isolés, note de basse suivie temps par temps, sur 5 extraits | Hit the Road Jack : 10 lignes descendantes (la basse sol#, fa#, mi, ré# sort exactement) ; Let It Be : 3 ; Despacito et Get Lucky : 1 ; Wake Me Up : 0 | Avec un seuil à 2 lignes, 5 morceaux sur 5 bien classés ; échantillon trop petit pour conclure, à élargir |
 | Combien de temps prend l'analyse ? | 10 extraits, puis les 200 du Top France et du Top Monde | 0,4 s par extrait ; 200 extraits téléchargés en 5 s et analysés en 24 s (0,12 s par extrait sur 8 cœurs) | Analyse en direct possible pendant la démo |
 | Peut-on proposer des morceaux pareils ? | Les 200 extraits des deux tops | Basse descendante dans 4 morceaux du Top France (Vacra, L2B, Ninho, Manon Lisa) et 5 du Top Monde (Ella Langley, Koe Wetzel, Lainey Wilson, Post Malone, Kacey Musgraves) | Il faut un catalogue de quelques milliers de titres pour proposer assez de morceaux par motif |
@@ -34,7 +35,7 @@ Deux points restent à prouver avant le 28 novembre : que la basse détectée es
 | Le goût d'un juré n'est pas harmonique (rythme, voix, son) : rien ne ressort de ses cinq morceaux | Élevée, c'est la démo | L'app le dit franchement ; elle cherche plusieurs motifs (basse, cadences, suites, mode) ; on la teste avant sur une dizaine de personnes | À tester |
 | La basse détectée est fausse | Élevée | Valider sur une cinquantaine de morceaux annotés à l'oreille par l'équipe, régler le seuil, montrer la basse à l'écran pour que l'auditeur l'entende | À faire avant le 28 |
 | L'extrait de 30 s ne contient pas le motif | Moyenne | Parler de « cet extrait » ; analyser plusieurs morceaux par personne | Accepté |
-| Les accords enrichis (septièmes, sus) échappent à l'audio | Moyenne | S'en tenir à la basse, aux suites majeures et mineures et au mode ; Chordonomicon pour les couleurs quand le morceau y est | Contourné |
+| Les accords enrichis (septièmes, neuvièmes) sont mal reconnus | Moyenne | lv-chordia mesure la part d'accords enrichis d'un morceau (4 morceaux riches sur 5 repérés, aucun faux positif sur 10) ; ne pas nommer chaque accord à l'auditeur | Contourné, à confirmer sur plus de morceaux |
 | Chordonomicon couvre mal le français et note rarement la basse | Moyenne | L'audio d'abord ; le jeu de données en complément | Contourné |
 | Pas d'historique d'écoute | Moyenne | Playlist publique ou cinq morceaux cités | Contourné |
 | Quota de l'API Deezer : au-delà d'une dizaine de requêtes par seconde, elle renvoie des erreurs (constaté) | Moyenne | Ralentir et contrôler chaque réponse ; les extraits audio, servis à part, ne sont pas concernés (200 téléchargés en 5 s) | Contourné |
@@ -46,7 +47,7 @@ Deux points restent à prouver avant le 28 novembre : que la basse détectée es
 ## Le chemin technique le plus court
 
 1. Entrée : cinq morceaux cherchés sur Deezer, ou une playlist publique.
-2. Analyse de chaque extrait : basse suivie temps par temps (librosa), accords majeurs et mineurs et tonalité (Essentia), 0,4 s par extrait.
+2. Analyse de chaque extrait : basse suivie temps par temps (librosa, 0,3 s), accords y compris enrichis (lv-chordia, 2 s) et tonalité (Essentia, 0,1 s).
 3. Profil : les motifs nettement plus fréquents dans les morceaux de la personne que dans le catalogue.
 4. Catalogue : quelques milliers d'extraits Deezer (playlists éditoriales, radios d'artistes proches) analysés à l'avance ou à la volée, complétés par Chordonomicon pour les morceaux plus anciens.
 5. Restitution : une phrase simple dite par la voix Gradium, la basse dessinée à l'écran pendant l'extrait, puis trois morceaux qui partagent le motif.
@@ -60,4 +61,4 @@ Deux points restent à prouver avant le 28 novembre : que la basse détectée es
 - [ ] Une cinquantaine de morceaux annotés à l'oreille pour mesurer les erreurs de la détection de basse.
 - [ ] Demander aux organisateurs si le code préparé est autorisé, et comment obtenir la clé Gradium.
 
-Les scripts de mesure sont restés hors du dépôt, en attendant de savoir si le code préparé avant l'événement est autorisé.
+Les scripts de mesure sont dans [`experiences/`](../experiences/) pour que chaque chiffre puisse être relu et relancé. Ce sont des mesures, pas le produit.

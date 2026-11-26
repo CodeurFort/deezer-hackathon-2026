@@ -6,16 +6,27 @@ Chaque étape du projet a ici une entrée datée, la plus récente en haut, avec
 
 - **Idée en tête** : repérer les motifs musicaux qu'un auditeur aime (basse qui descend, suites d'accords, rythme) et lui proposer des morceaux qui ont les mêmes, en lui disant pourquoi.
 - **Faisabilité** : établie en partant de l'audio des extraits Deezer ; la basse qui descend est validée à l'oreille par Aurian sur 5 morceaux.
-- **En cours** : test d'un modèle de deep learning qui reconnaît les accords enrichis (septièmes, neuvièmes…).
+- **Accords enrichis** : un modèle de deep learning existant (lv-chordia) mesure la part de septièmes et de neuvièmes d'un morceau ; testé sur 15 extraits.
+- **Pistes ouvertes par Aurian le 26/11** : l'analyse du rythme (kick, charleston, espace), des réglages manuels façon Flow Tuner, un agent vocal avec avatar 3D.
 - **À faire** : le test d'Aurian sur ses propres morceaux ; l'écoute des 4 morceaux restants ; les questions aux organisateurs (code préparé autorisé ? clé Gradium ?) ; l'inscription.
 
 ## 26 novembre 2026
 
-### Test des modèles d'accords enrichis (en cours)
+### Documentation : le registre et les scripts de mesure
 
-- **Demande** : savoir si un modèle existant reconnaît les accords de septième, neuvième ou onzième sur nos extraits Deezer, sans avoir à entraîner de modèle.
-- **Fait** : installation isolée dans le dossier de travail de Claude (Python 3.12, PyTorch, [lv-chordia](https://github.com/openmirlab/lv-chordia)). Le système de permissions de Claude Code l'avait d'abord bloquée ; Aurian l'a autorisée.
-- **Résultats** : à venir dans cette entrée.
+- **Demande d'Aurian** : un registre sur GitHub pour suivre le travail.
+- **Fait** : ce registre ; les 11 scripts de mesure dans [`experiences/`](experiences/), avec leur mode d'emploi et les pièges rencontrés. Ceux qui avaient été lancés directement dans le terminal y sont enregistrés tels qu'ils ont tourné.
+
+### Test d'un modèle d'accords enrichis par deep learning
+
+- **Demande** : savoir si un modèle existant reconnaît les septièmes et les neuvièmes sur nos extraits Deezer, sans avoir à entraîner de modèle.
+- **Fait** : installation isolée de Python 3.12, PyTorch et [lv-chordia](https://github.com/openmirlab/lv-chordia), autorisée par Aurian après un premier blocage du système de permissions. Test sur 15 extraits : les 10 morceaux simples déjà mesurés avec Essentia, et 5 morceaux riches en septièmes (Moondance, Isn't She Lovely, Get Lucky, Fly Me to the Moon, Smooth). Script : [`experiences/test_lvchordia.py`](experiences/test_lvchordia.py).
+- **Résultats** :
+  - 96 % du temps sur les bonnes triades, contre 77 % pour Essentia ; « Hit the Road Jack » passe de 36 % à 76 %, avec ses quatre basses descendantes exactes ;
+  - il reconnaît septièmes, neuvièmes et accords demi-diminués, mais l'accord exact n'est juste que 56 % du temps sur les morceaux à septièmes, avec des références approximatives ;
+  - la part d'accords enrichis sépare bien les morceaux : 90 à 100 % pour Moondance, Isn't She Lovely et Fly Me to the Moon, 56 % pour Smooth, 0 à 23 % pour les 10 morceaux simples ; seul « Get Lucky » est raté (0 %) ;
+  - 2 s par extrait de 30 s sur le processeur du Mac.
+- **Conclusion** : le critère « couleurs d'accords » est mesurable à l'échelle d'un morceau ; nommer chaque accord à l'auditeur reste trop incertain. Étude mise à jour dans [`docs/faisabilite.md`](docs/faisabilite.md).
 
 ### Écoute d'Aurian et recherche sur le deep learning audio
 
