@@ -1,2 +1,5 @@
 # Fichiers système du Mac
 .DS_Store
+
+# Écoutes locales (basses isolées), trop lourdes pour le dépôt
+ecoute/
