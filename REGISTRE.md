@@ -7,10 +7,25 @@ Chaque étape du projet a ici une entrée datée, la plus récente en haut, avec
 - **Idée en tête** : repérer les motifs musicaux qu'un auditeur aime (basse qui descend, suites d'accords, rythme) et lui proposer des morceaux qui ont les mêmes, en lui disant pourquoi.
 - **Faisabilité** : établie en partant de l'audio des extraits Deezer ; la basse qui descend est validée à l'oreille par Aurian sur 5 morceaux.
 - **Accords enrichis** : un modèle de deep learning existant (lv-chordia) mesure la part de septièmes et de neuvièmes d'un morceau ; testé sur 15 extraits.
+- **Suites de degrés** : IV–V–I, ii–V–I, cadence rompue, iv emprunté… se repèrent dans l'audio ; les suites rares révèlent un goût dès 5 morceaux, IV–V–I en demande davantage.
 - **Pistes ouvertes par Aurian le 26/11** : l'analyse du rythme (kick, charleston, espace), des réglages manuels façon Flow Tuner, un agent vocal avec avatar 3D.
 - **À faire** : le test d'Aurian sur ses propres morceaux ; l'écoute des 4 morceaux restants ; les questions aux organisateurs (code préparé autorisé ? clé Gradium ?) ; l'inscription.
 
 ## 26 novembre 2026
+
+### Les suites de degrés : peut-on dire à quelqu'un qu'il aime les IV–V–I ?
+
+- **Demande d'Aurian** : si on détecte les accords, peut-on aussi détecter les suites appréciées, en solfège (IV–V–I…) ?
+- **Fait** : un module qui estime la tonalité, chiffre les accords en degrés et repère dix suites ([`experiences/degres.py`](experiences/degres.py)). Vérifié sur 10 suites écrites (8 lues comme attendu, 2 ambiguës par nature), puis sur l'audio de 14 extraits ([`test_degres.py`](experiences/test_degres.py)), puis sur 169 873 morceaux de Chordonomicon ([`frequences_suites.py`](experiences/frequences_suites.py)).
+- **Résultats** :
+  - audio : tonalité juste pour 11 morceaux sur 14 ; la boucle I–V–vi–IV est repérée sur les 5 morceaux qui l'ont, Stand By Me ressort en suite des années 50 avec IV–V–I, Hit the Road Jack en cadence andalouse ;
+  - fréquences : IV–I 61,7 %, IV–V–I 34,6 %, cadence rompue 27,6 %, boucle I–V–vi–IV 17,5 %, années 50 13,8 %, ii–V–I 13,1 %, II–V–I 6,1 %, bVII–IV–I 4,5 %, iv emprunté 4,1 %, andalouse 1,3 % ;
+  - la tonalité est ambiguë dans 32 % des morceaux (relative majeure ou mineure, modes).
+- **Erreurs et corrections** :
+  - le modèle de tonalité ignorait l'accord bVII du rock : ajouté ;
+  - la cadence andalouse sautait quand le premier accord était lu majeur : rendue tolérante ;
+  - ma référence pour Get Lucky était incomplète, puisque les sources hésitent entre si dorien et fa# mineur.
+- **Conclusion** : oui, on peut dire à quelqu'un quelles suites il aime, avec deux règles. Une suite courante comme IV–V–I demande 5 morceaux sur 5 ou 8 sur 10 ; une suite rare (ii–V–I, iv emprunté, andalouse) se repère dès 4 sur 5. Et l'app annonce toujours le motif le plus rare, jamais les cadences contenues dans une boucle.
 
 ### Documentation : le registre et les scripts de mesure
 

@@ -37,6 +37,9 @@ Les extraits audio sont téléchargés par les scripts depuis l'API publique de 
 | `basse_audio.py` | Suivi de la basse dans l'audio et repérage des lignes qui descendent | `venv-audio/bin/python basse_audio.py extraits/*.mp3` |
 | `pool.py` | Analyse des 200 extraits du Top France et du Top Monde : temps de calcul et basses descendantes | `venv-audio/bin/python` |
 | `test_lvchordia.py` | Accords enrichis par deep learning (lv-chordia) sur 15 extraits, dont 5 riches en septièmes | `venv-accords/bin/python` |
+| `degres.py` | Des accords aux degrés : tonalité estimée, chiffrage (I, IV, V…), suites repérées (IV–V–I, ii–V–I, cadence rompue…). Module | `python3 -c "from degres import analyse"` |
+| `test_degres.py` | Tonalité et suites détectées dans l'audio de 14 extraits, comparées à une analyse de référence | `venv-accords/bin/python`, après `test_lvchordia.py` |
+| `frequences_suites.py` | La fréquence de chaque suite sur 169 873 morceaux de Chordonomicon | `python3` |
 
 ## Pièges rencontrés
 

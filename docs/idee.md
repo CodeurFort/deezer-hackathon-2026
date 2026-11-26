@@ -38,7 +38,7 @@ La page de l'événement pose la question : comment ton app sait ce que tu veux 
 
 1. Entrée : cinq morceaux cherchés sur Deezer, ou une playlist publique Deezer, lisible sans clé avec les codes ISRC (testé).
 2. Analyse de l'audio de chaque extrait de 30 secondes, en 2 à 3 secondes : la basse suivie temps par temps, les accords y compris enrichis (septièmes, neuvièmes) grâce à un modèle de deep learning pré-entraîné, et la tonalité. En complément, le jeu de données [Chordonomicon](https://huggingface.co/datasets/ailsntua/Chordonomicon) (679 807 morceaux, accords section par section, tirés d'Ultimate Guitar) donne les accords enrichis des morceaux plus anciens ; on le relie à Deezer par l'aperçu public de Spotify, sans compte (38 morceaux sur 40 retrouvés).
-3. Motifs, calculés pour chaque morceau : basse qui descend, cadences, boucles de quatre accords, accords enrichis (septièmes, sus, add9), mode majeur ou mineur, modulations, degré de surprise des accords.
+3. Motifs, calculés pour chaque morceau : basse qui descend, suites de degrés (IV–V–I, ii–V–I, cadence rompue, iv emprunté…), boucles de quatre accords, accords enrichis (septièmes, sus, add9), mode majeur ou mineur, modulations, degré de surprise des accords.
 4. Profil : les motifs plus fréquents dans les morceaux aimés que dans l'ensemble du catalogue.
 5. Recommandation : des morceaux qui partagent ces motifs, chacun avec sa raison.
 6. Restitution : la voix Gradium explique, et un visuel de la suite d'accords suit l'extrait.
