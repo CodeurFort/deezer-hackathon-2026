@@ -74,4 +74,13 @@ Deux points restent à prouver avant le 28 novembre : que la basse détectée es
 - [ ] Une cinquantaine de morceaux annotés à l'oreille pour mesurer les erreurs de la détection de basse.
 - [ ] Demander aux organisateurs si le code préparé est autorisé, et comment obtenir la clé Gradium.
 
-Les scripts de mesure sont dans [`experiences/`](../experiences/) pour que chaque chiffre puisse être relu et relancé. Ce sont des mesures, pas le produit.
+Les scripts de mesure ont été retirés du dépôt le 28 novembre : le règlement impose que le code soit écrit pendant le hackathon. Les méthodes et les chiffres restent ici ; le code sera réécrit pendant l'événement.
+
+## Pièges rencontrés
+
+- La recherche avancée de Deezer (`artist:"…" track:"…"`) renvoie zéro résultat : utiliser la recherche simple.
+- Au-delà d'une dizaine de requêtes par seconde, l'API publique Deezer renvoie des erreurs à la place des données : ralentir et contrôler chaque réponse.
+- lv-chordia cherche les fichiers relatifs à côté de son propre code : lui passer des chemins absolus.
+- Demucs range parfois une partie de la 808 avec la batterie, à cause de son attaque de kick.
+- Les sites de BPM donnent souvent deux lectures du tempo (compté et ressenti) : comparer aux deux.
+- Aucune donnée personnelle dans les en-têtes des requêtes envoyées aux services externes.

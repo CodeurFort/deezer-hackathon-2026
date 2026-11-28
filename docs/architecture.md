@@ -35,7 +35,7 @@ L'auditeur donne cinq morceaux. L'analyse audio en tire trois familles de critè
 
 ## Les cinq couches du squelette, critère par critère
 
-Le concept et ses arguments sont dans [`concept.md`](concept.md).
+Le concept et ses arguments sont dans [`concept.md`](concept.md). Les scripts cités ont servi aux mesures avant l'événement ; ils sont retirés du dépôt et le code sera réécrit pendant le hackathon.
 
 | Couche | Critères calculés | Outils | Statut |
 | --- | --- | --- | --- |

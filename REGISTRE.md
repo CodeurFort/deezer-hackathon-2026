@@ -10,7 +10,15 @@ Chaque étape du projet a ici une entrée datée, la plus récente en haut, avec
 - **Accords enrichis** : un modèle de deep learning existant (lv-chordia) mesure la part de septièmes et de neuvièmes d'un morceau ; testé sur 15 extraits.
 - **Suites de degrés** : IV–V–I, ii–V–I, cadence rompue, iv emprunté… se repèrent dans l'audio ; les suites rares révèlent un goût dès 5 morceaux, IV–V–I en demande davantage.
 - **Pistes ouvertes par Aurian le 26/11** : l'analyse du rythme (kick, charleston, espace), des réglages manuels façon Flow Tuner, un agent vocal avec avatar 3D.
-- **À faire** : le test d'Aurian sur ses propres morceaux ; l'écoute des 4 morceaux restants ; les questions aux organisateurs (code préparé autorisé ? clé Gradium ?) ; l'inscription.
+- **Depuis le 28 novembre** : le hackathon a commencé ; le code est écrit dans [`hackdeezer-2026`](https://github.com/CodeurFort/hackdeezer-2026), suivi dans son propre registre.
+
+## 28 novembre 2026
+
+### Code retiré, nouveau dépôt pour le hackathon
+
+- **Contexte** : le règlement impose que le code soit écrit pendant le hackathon (règle 3) ; le SDK, les API et le jeu de données Deezer ne doivent être ni redistribués ni publiés (règle 4).
+- **Fait** : les 24 scripts de mesure et le dossier `experiences/` sont retirés de ce dépôt. Les méthodes, les chiffres et les pièges restent dans [`docs/faisabilite.md`](docs/faisabilite.md). Le code du week-end vit dans le nouveau dépôt [`hackdeezer-2026`](https://github.com/CodeurFort/hackdeezer-2026), qui a son propre registre.
+- **À savoir** : les scripts restent dans l'historique Git de ce dépôt privé, qui n'est pas le dépôt rendu.
 
 ## 26 novembre 2026
 
@@ -29,7 +37,7 @@ Chaque étape du projet a ici une entrée datée, la plus récente en haut, avec
   - Deezer Research : explicabilité (Afchar et al., 2022) et biais des profils de goût écrits par modèle de langage (Sguerra et al., 2025) ;
   - outils : Basic Pitch, Demucs, Beat This! ;
   - Ready Player Me fermé, sources d'avatars restantes.
-- **Expériences** (scripts dans [`experiences/`](experiences/), chiffres dans [`docs/faisabilite.md`](docs/faisabilite.md)) :
+- **Expériences** (scripts dans `experiences/` (retiré le 28/11), chiffres dans [`docs/faisabilite.md`](docs/faisabilite.md)) :
   - **gamme et mode**, sur 17 morceaux choisis difficiles : 3, puis 8, puis 8 justes en trois versions ; arrêté après trois essais sans progrès ;
   - **tempo** : Beat This! juste 11 fois sur 11 en admettant les deux lectures que donnent les sites eux-mêmes (Zombie 165 ou 83) ;
   - **rythme harmonique** : Let It Be change d'accord tous les 2 temps, Get Lucky tous les 4 ;
@@ -65,8 +73,8 @@ Chaque étape du projet a ici une entrée datée, la plus récente en haut, avec
 
 - **Demande d'Aurian** : exploiter trois piliers, les suites d'accords, les mouvements de la basse (pas seulement la descente) et le rythme (kick, caisse claire, charleston, percussions afro par les fréquences).
 - **Fait** :
-  - mouvements de basse sur 189 extraits des tops et 10 morceaux connus ([`mouvements_basse.py`](experiences/mouvements_basse.py)) ;
-  - rythme par bandes de fréquences sur une grille de 16 doubles-croches, sur 6 styles ([`rythme.py`](experiences/rythme.py)).
+  - mouvements de basse sur 189 extraits des tops et 10 morceaux connus (`mouvements_basse.py`) ;
+  - rythme par bandes de fréquences sur une grille de 16 doubles-croches, sur 6 styles (`rythme.py`).
 - **Résultats** :
   - basse : 47 qui marchent, 30 qui sautent, 12 qui montent, 8 qui descendent, 5 qui tiennent une note, 87 mixtes ; Stand By Me ressort bien en basse qui marche ;
   - rythme : le rock a peu de contretemps (4 %) et beaucoup d'air (62 %), l'afrobeats est le plus syncopé (47 à 49 % de contretemps), le disco et le reggaeton sont les plus denses ;
@@ -76,7 +84,7 @@ Chaque étape du projet a ici une entrée datée, la plus récente en haut, avec
 ### Les suites de degrés : peut-on dire à quelqu'un qu'il aime les IV–V–I ?
 
 - **Demande d'Aurian** : si on détecte les accords, peut-on aussi détecter les suites appréciées, en solfège (IV–V–I…) ?
-- **Fait** : un module qui estime la tonalité, chiffre les accords en degrés et repère dix suites ([`experiences/degres.py`](experiences/degres.py)). Vérifié sur 10 suites écrites (8 lues comme attendu, 2 ambiguës par nature), puis sur l'audio de 14 extraits ([`test_degres.py`](experiences/test_degres.py)), puis sur 169 873 morceaux de Chordonomicon ([`frequences_suites.py`](experiences/frequences_suites.py)).
+- **Fait** : un module qui estime la tonalité, chiffre les accords en degrés et repère dix suites (`degres.py`). Vérifié sur 10 suites écrites (8 lues comme attendu, 2 ambiguës par nature), puis sur l'audio de 14 extraits (`test_degres.py`), puis sur 169 873 morceaux de Chordonomicon (`frequences_suites.py`).
 - **Résultats** :
   - audio : tonalité juste pour 11 morceaux sur 14 ; la boucle I–V–vi–IV est repérée sur les 5 morceaux qui l'ont, Stand By Me ressort en suite des années 50 avec IV–V–I, Hit the Road Jack en cadence andalouse ;
   - fréquences : IV–I 61,7 %, IV–V–I 34,6 %, cadence rompue 27,6 %, boucle I–V–vi–IV 17,5 %, années 50 13,8 %, ii–V–I 13,1 %, II–V–I 6,1 %, bVII–IV–I 4,5 %, iv emprunté 4,1 %, andalouse 1,3 % ;
@@ -90,12 +98,12 @@ Chaque étape du projet a ici une entrée datée, la plus récente en haut, avec
 ### Documentation : le registre et les scripts de mesure
 
 - **Demande d'Aurian** : un registre sur GitHub pour suivre le travail.
-- **Fait** : ce registre ; les 11 scripts de mesure dans [`experiences/`](experiences/), avec leur mode d'emploi et les pièges rencontrés. Ceux qui avaient été lancés directement dans le terminal y sont enregistrés tels qu'ils ont tourné.
+- **Fait** : ce registre ; les 11 scripts de mesure dans `experiences/` (retiré le 28/11), avec leur mode d'emploi et les pièges rencontrés. Ceux qui avaient été lancés directement dans le terminal y sont enregistrés tels qu'ils ont tourné.
 
 ### Test d'un modèle d'accords enrichis par deep learning
 
 - **Demande** : savoir si un modèle existant reconnaît les septièmes et les neuvièmes sur nos extraits Deezer, sans avoir à entraîner de modèle.
-- **Fait** : installation isolée de Python 3.12, PyTorch et [lv-chordia](https://github.com/openmirlab/lv-chordia), autorisée par Aurian après un premier blocage du système de permissions. Test sur 15 extraits : les 10 morceaux simples déjà mesurés avec Essentia, et 5 morceaux riches en septièmes (Moondance, Isn't She Lovely, Get Lucky, Fly Me to the Moon, Smooth). Script : [`experiences/test_lvchordia.py`](experiences/test_lvchordia.py).
+- **Fait** : installation isolée de Python 3.12, PyTorch et [lv-chordia](https://github.com/openmirlab/lv-chordia), autorisée par Aurian après un premier blocage du système de permissions. Test sur 15 extraits : les 10 morceaux simples déjà mesurés avec Essentia, et 5 morceaux riches en septièmes (Moondance, Isn't She Lovely, Get Lucky, Fly Me to the Moon, Smooth). Script : `test_lvchordia.py`.
 - **Résultats** :
   - 96 % du temps sur les bonnes triades, contre 77 % pour Essentia ; « Hit the Road Jack » passe de 36 % à 76 %, avec ses quatre basses descendantes exactes ;
   - il reconnaît septièmes, neuvièmes et accords demi-diminués, mais l'accord exact n'est juste que 56 % du temps sur les morceaux à septièmes, avec des références approximatives ;
